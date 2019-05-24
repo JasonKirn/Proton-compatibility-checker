@@ -2,7 +2,7 @@
   "name": "proton-compatibility-checker",
   "version": "1.0.0",
   "description": "This website will use Proton and steam apis to confirm if games you have in your steam library are compatible with Proton.",
-  "main": "index.js",
+  "main": "scripts/index.js",
   "dependencies": {
     "debug": "^4.1.1",
     "express": "^4.17.0",
