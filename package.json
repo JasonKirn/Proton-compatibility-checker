@@ -4,6 +4,7 @@
   "description": "This website will use Proton and steam apis to confirm if games you have in your steam library are compatible with Proton.",
   "main": "index.js",
   "dependencies": {
+    "debug": "^2.6.9",
     "express": "^4.17.0",
     "node.js": "^0.0.0"
   },
