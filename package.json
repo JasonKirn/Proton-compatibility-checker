@@ -1,0 +1,30 @@
+{
+  "name": "proton-compatibility-checker",
+  "version": "1.0.0",
+  "description": "This website will use Proton and steam apis to confirm if games you have in your steam library are compatible with Proton.",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.0",
+    "node.js": "^0.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JasonKirn/Proton-compatibility-checker.git"
+  },
+  "keywords": [
+    "Proton",
+    "Steam",
+    "Api",
+    "videogame"
+  ],
+  "author": "Jason Kirn  Christopher Muden",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JasonKirn/Proton-compatibility-checker/issues"
+  },
+  "homepage": "https://github.com/JasonKirn/Proton-compatibility-checker#readme"
+}
