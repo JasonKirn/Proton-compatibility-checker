@@ -3,15 +3,19 @@ console.log("test console log");
 
 
 //Ties everything together
-const express = require('express')
-const app = express()
+const expresss = require('express')
+const app = expresss()
 const port = 3000
-var path = require("path");
+var pathVar = require("path");
 
 
 //Routing for Home Page
-app.get('/', (req, res) => res.sendFile(path.join(__dirname,'../index.html')))
+app.get('/', (req, res) => res.sendFile(pathVar.join(__dirname,'../index.html')))
 
+
+app.get('/himjim', (req, res) => {
+    res.send('This is the rootinest tootinest webpage himjim')
+})
 
 //Init Server and Run Code
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

@@ -1,2 +1,30 @@
-<script src="index.js"></script>
-<p>Welcome to The Proton Compatablitly Checker Webpage</p>
+<html>
+    <head>
+        <!--Any css here-->
+    </head>
+    
+    <body>
+        <h1>Welcome to the Proton compatibility checker.</h1>
+        Controller Test Button:
+        <input type="button" id="submit" value="Submit">
+        <button onclick="createTextFunction()" id="submit" value="Submit">Test Button</button>
+    </body>
+    
+
+    <script>
+        //Possible to create an instance of controller a call methods
+        //from it?
+        function createTextFunction() {
+            console.log("2nd Test button clicked");
+        }
+        $(document).ready(function()
+        {
+            $("#submit").click(function()
+            {
+                console.log("Test button clicked");
+                $("body").empty();
+                $("body").append("Test controller button clicked");
+            });
+        });
+    </script>
+</html>

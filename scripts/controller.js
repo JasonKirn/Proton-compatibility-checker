@@ -1,0 +1,1 @@
+console.log("Test to see if controller is connected")
