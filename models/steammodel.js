@@ -4,7 +4,7 @@ const testUser = "76561197979972334";
 const http = require("http");
 
 function getGames(steamid, apikey) {
-   let apicall = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + apikey + "&steamid=" + steamid + "&format=json"
+   let apicall = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + apikey + "&steamid=" + steamid + "&include_appinfo=1" + "&format=json"
 
    let games = http.get(apicall, function(res) {
 
