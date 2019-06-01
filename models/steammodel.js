@@ -33,22 +33,23 @@ function getGames(steamid, apikey) {
 //Title
 //Number hours played (minutes)
 
-function masterSortingFunction() {
-   //Switch
+function gameNameSorting(gamelist, isDecsending) {
+   //gamename sorting
+}
 
-   //Sorts will depend on what the user wants sorted
+function playTimeSorting(gamelist, isDecsending) {
+   //playtime sorting
+}
 
-   //Sort 1
-
-   //Call sort 1 function
-
-   //Sort 2
-
-   //Call sort 2 function
-
-   //Sort 3
-
-   //Call sort 3 function
+function masterSortingFunction(gamelist, sorttype, isDecsending) {
+   switch(sorttype) {
+      case "gameName":
+            gameNameSorting(gamelist, isDecsending);
+         break;
+      case "playTime":
+         playTimeSorting(gamelist, isDecsending)
+         break;
+   }
 }
 
 getGames(testUser, apikey.key);
