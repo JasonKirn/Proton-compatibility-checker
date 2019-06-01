@@ -17,4 +17,5 @@ app.get('/himjim', (req, res) => {
 
 //Init Server and Run Code
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
-var steammodel = require("../models/steammodel");
+//var steammodel = require("../models/steammodel");
+var controller = require("../scripts/controller");

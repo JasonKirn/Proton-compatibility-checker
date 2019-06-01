@@ -1,9 +1,16 @@
 //Test code for Steam API below
-const apikey = require("../keys/steamapikey.json");
-const testUser = "76561197979972334";
+//const apikey = require("../keys/steamapikey.json");
+//const testUser = "76561197979972334";
 const http = require("http");
+var controllerFile = require("../scripts/controller");
 
-function getGames(steamid, apikey) {
+/*exports.test = function () {
+   console.log("Hi, the test worked");
+}*/
+
+exports.getGames = function (steamid, apikey) {
+
+   console.log("This is the result: " + apikey);
    let apicall = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + apikey + "&steamid=" + steamid + "&include_appinfo=1" + "&format=json"
 
    let games = http.get(apicall, function(res) {
@@ -52,4 +59,4 @@ function masterSortingFunction(gamelist, sorttype, isDecsending) {
    }
 }
 
-getGames(testUser, apikey.key);
+//getGames(testUser, apikey.key);
