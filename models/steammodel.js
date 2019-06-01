@@ -51,4 +51,4 @@ function masterSortingFunction() {
    //Call sort 3 function
 }
 
-getGames("76561197979972334", apikey.key);
+getGames(testUser, apikey.key);
