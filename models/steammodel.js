@@ -24,4 +24,31 @@ function getGames(steamid, apikey) {
       })
    });
 }
+
+//Param 1: Game list we are sorting
+//Param 2: What we are sorting on
+//Param 3: Ascending or Descending
+
+//Options to sort on:
+//Title
+//Number hours played (minutes)
+
+function masterSortingFunction() {
+   //Switch
+
+   //Sorts will depend on what the user wants sorted
+
+   //Sort 1
+
+   //Call sort 1 function
+
+   //Sort 2
+
+   //Call sort 2 function
+
+   //Sort 3
+
+   //Call sort 3 function
+}
+
 getGames("76561197979972334", apikey.key);
