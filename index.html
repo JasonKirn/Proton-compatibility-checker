@@ -19,6 +19,11 @@
     <script>
         //Possible to create an instance of controller a call methods
         //from it?
+
+        $.ajax({url: "../keys/steamapikey.json", success: function(result){
+            console.log(result);
+        }});
+
         function createTextFunction() {
             console.log("2nd Test button clicked");
         }
