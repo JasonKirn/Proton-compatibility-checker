@@ -11,9 +11,9 @@ var controllerFile = require("../scripts/controller");
 exports.getGames = function (steamid, apikey) {
 
    console.log("This is the result: " + apikey);
-   let apicall = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + apikey + "&steamid=" + steamid + "&include_appinfo=1" + "&format=json"
+   var apicall = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + apikey + "&steamid=" + steamid + "&include_appinfo=1" + "&format=json"
 
-   let games = http.get(apicall, function(res) {
+   let games = http.get(apicall, function (res) {
 
       let data = "";
       let procceddata = '';
@@ -27,7 +27,7 @@ exports.getGames = function (steamid, apikey) {
 
          procceddata = JSON.parse(data);
          console.log(procceddata.response.games);
-         
+
       })
    });
 }
@@ -49,9 +49,9 @@ function playTimeSorting(gamelist, isDecsending) {
 }
 
 function masterSortingFunction(gamelist, sorttype, isDecsending) {
-   switch(sorttype) {
+   switch (sorttype) {
       case "gameName":
-            gameNameSorting(gamelist, isDecsending);
+         gameNameSorting(gamelist, isDecsending);
          break;
       case "playTime":
          playTimeSorting(gamelist, isDecsending)
