@@ -1,12 +1,5 @@
-//const apikey = require("../keys/steamapikey.json");
-//const testUser = "76561197979972334";
-//apikey = require("../keys/steamapikey.json");
+
 testUser = "76561197979972334";
-//console.log(apikey);
-//<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-/*$.ajax({url: "../keys/steamapikey.json", success: function(result){
-    console.log(result);
-}});*/
 
 //Goals:
 
