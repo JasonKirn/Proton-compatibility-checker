@@ -8,29 +8,30 @@ var controllerFile = require("../scripts/controller");
    console.log("Hi, the test worked");
 }*/
 
-exports.getGames = function (steamid, apikey) {
+   exports.getGames = function (steamid, apikey) {
 
-   console.log("This is the result: " + apikey);
-   var apicall = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + apikey + "&steamid=" + steamid + "&include_appinfo=1" + "&format=json"
+      console.log("This is the result: " + apikey);
+      var apicall = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + apikey + "&steamid=" + steamid + "&include_appinfo=1" + "&format=json"
 
-   let games = http.get(apicall, function (res) {
+      let games = http.get(apicall, function (res) {
 
-      let data = "";
-      let procceddata = '';
+         let data = "";
+         let procceddata = '';
 
-      res.on('data', (chunks) => {
+         res.on('data', (chunks) => {
 
-         data += chunks;
+            data += chunks;
 
-      })
-      res.on('end', () => {
+         })
+         res.on('end', () => {
 
-         procceddata = JSON.parse(data);
-         console.log(procceddata.response.games);
+            procceddata = JSON.parse(data);
+            console.log(procceddata.response.games);
 
-      })
-   });
-}
+         })
+      });
+   }
+
 
 //Param 1: Game list we are sorting
 //Param 2: What we are sorting on
