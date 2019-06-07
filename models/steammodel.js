@@ -1,12 +1,6 @@
 //Test code for Steam API below
-//const apikey = require("../keys/steamapikey.json");
-//const testUser = "76561197979972334";
 const http = require("http");
-var controllerFile = require("../scripts/controller");
 
-/*exports.test = function () {
-   console.log("Hi, the test worked");
-}*/
 
    exports.getGames = function (steamid, apikey) {
 
@@ -26,7 +20,7 @@ var controllerFile = require("../scripts/controller");
          res.on('end', () => {
 
             procceddata = JSON.parse(data);
-            console.log(procceddata.response.games);
+            //console.log(procceddata.response.games);
 
          })
       });
