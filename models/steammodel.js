@@ -1,29 +1,28 @@
-//Test code for Steam API below
-const http = require("http");
+exports.getGames = function (steamid, apikey) {
+   //Loads http module
+   const http = require("http");
+   //Api call string
+   var apicall = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + apikey + "&steamid=" + steamid + "&include_appinfo=1" + "&format=json"
+   //HTTP Request
+   let gamesRequest = http.get(apicall, function (res) {
+      //Setting up variables for unparsed and parsed data
+      let data = "";
+      let parseddata = '';
+      //Retriving data from HTTP request, putting code "chunks" into data variable
+      res.on('data', (chunks) => {
 
+         data += chunks;
 
-   exports.getGames = function (steamid, apikey) {
+      })
+      //Runs after "end" is recived from HTTP request
+      res.on('end', () => {
+         //Parses data (which is a json object) into parasedata variable
+         parseddata = JSON.parse(data);
+         return(parseddata.response.games);
 
-      var apicall = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + apikey + "&steamid=" + steamid + "&include_appinfo=1" + "&format=json"
-
-      let games = http.get(apicall, function (res) {
-
-         let data = "";
-         let procceddata = '';
-
-         res.on('data', (chunks) => {
-
-            data += chunks;
-
-         })
-         res.on('end', () => {
-
-            procceddata = JSON.parse(data);
-            console.log(procceddata.response.games);
-
-         })
-      });
-   }
+      })
+   });
+}
 
 
 //Param 1: Game list we are sorting
