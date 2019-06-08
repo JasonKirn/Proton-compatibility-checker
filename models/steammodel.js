@@ -4,7 +4,6 @@ const http = require("http");
 
    exports.getGames = function (steamid, apikey) {
 
-      console.log("This is the result: " + apikey);
       var apicall = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + apikey + "&steamid=" + steamid + "&include_appinfo=1" + "&format=json"
 
       let games = http.get(apicall, function (res) {
@@ -20,7 +19,7 @@ const http = require("http");
          res.on('end', () => {
 
             procceddata = JSON.parse(data);
-            //console.log(procceddata.response.games);
+            console.log(procceddata.response.games);
 
          })
       });

@@ -1,25 +1,20 @@
-//This code runs the express server
-console.log("test console log");
+/**
+ * Main JS file for Proton combatablitly checker. Starts express server and intalizes view.
+ */
+startServer = function () {
+    //Variable declartions needed to start express
+    const expresss = require('express')
+    const app = expresss()
+    const port = 3000
+    const pathVar = require("path");
 
 
-//Ties everything together
-const expresss = require('express')
-const app = expresss()
-const port = 3000
-var pathVar = require("path");
+    //Route declerations for webpage traversal
+    app.get('/', (req, res) => res.sendFile(pathVar.join(__dirname, '../index.html')))
 
-
-//Routing for Home Page
-app.get('/', (req, res) => res.sendFile(pathVar.join(__dirname,'../index.html')))
-/*app.get("/scripts/main.js", (req, res) => res.sendFile(pathVar.join(__dirname,'../scripts/main.js')))
-app.get("/scripts/controller.js", (req, res) => res.sendFile(pathVar.join(__dirname,'../scripts/controller.js')))
-app.get("/keys/steamapikey.json", (req, res) => res.sendFile(pathVar.join(__dirname,'../keys/steamapikey.json')))
-*/
-app.get('/himjim', (req, res) => {
-    res.send('This is the rootinest tootinest webpage himjim')
-})
-
-//Init Server and Run Code
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
-//var steammodel = require("../models/steammodel");
-var controller = require("../scripts/controller");
+    //Code to start server
+    app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+    //Start and run Controller
+    var controller = require("../scripts/controller");
+}
+startServer();
