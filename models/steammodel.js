@@ -18,8 +18,8 @@ exports.getGames = function (steamid, apikey) {
       res.on('end', () => {
          //Parses data (which is a json object) into parasedata variable
          parseddata = JSON.parse(data);
-         return(parseddata.response.games);
-
+         //sortByPlaytime(parseddata.response.games)
+         return (parseddata.response.games);
       })
    });
 }
@@ -51,5 +51,33 @@ function masterSortingFunction(gamelist, sorttype, isDecsending) {
          break;
    }
 }
+sortByPlaytime = function (gameList) {
+   quickSort(gameList, 0, gameList.length, "playtime_forever")
+}
 
-//getGames(testUser, apikey.key);
+quickSort = function (array, startOfArray, endOFArray, objectName) {
+   if (startOfArray < endOFArray) {
+      let piviotPosition = partition(array, startOfArray, endOFArray, objectName)
+      quickSort(array, startOfArray, piviotPosition - 1, objectName)
+      quickSort(array, piviotPosition, endOFArray, objectName)
+   }
+}
+
+partition = function (array, startOfArray, endOFArray, objectName) {
+   let j = startOfArray + 1
+   let piviot = array[startOfArray][objectName]
+   for (i = startOfArray; i <= endOFArray; i++) {
+      if (array[i][objectName] < piviot) {
+         swap(array, j, i)
+         j++
+      }
+   }
+   swap (array, array[startOfArray], array[j - 1] )
+   return j - 1
+}
+
+swap = function (array, index1, index2) {
+   let temp = array[index1]
+   array[index1] = array[index2]
+   array[index2] = temp
+}
