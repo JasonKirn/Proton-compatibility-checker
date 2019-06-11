@@ -1,4 +1,3 @@
-
 var testUser = "76561197979972334";
 var apikey = require("../keys/steamapikey.json")
 
@@ -9,8 +8,8 @@ var apikey = require("../keys/steamapikey.json")
 var steamModel = require("../models/steammodel.js");
 
 function callSteamModelAndDisplayResults() {
-    const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
-    const steamResultsPromise = ms => new Promise((resolve, reject) => {
+
+    var steamResultsPromise = new Promise((resolve, reject) => {
         
         //api call successful 
         if (steamModel.getGames(testUser, apikey.key) != undefined) {
@@ -21,6 +20,13 @@ function callSteamModelAndDisplayResults() {
         //api call unsuccessful
         reject(new Error('Steam api called failed, rejecting promise'));
     });
+
+    steamResultsPromise.then(function (result) {
+        console.log(result);
+    }, function(error) {
+        console.log(error);
+    });
+    
     
     var steamModelCallResults = steamModel.getGames(testUser, apikey.key);
 
