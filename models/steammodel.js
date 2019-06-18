@@ -1,4 +1,7 @@
+var iterations = 0
+
 exports.getGames = function (steamid, apikey) {
+
    //Loads http module
    const http = require("http");
    //Api call string
@@ -18,7 +21,7 @@ exports.getGames = function (steamid, apikey) {
       res.on('end', () => {
          //Parses data (which is a json object) into parasedata variable
          parseddata = JSON.parse(data);
-         //sortByPlaytime(parseddata.response.games)
+         console.log(sortByPlaytime(parseddata.response.games))
          return (parseddata.response.games);
       })
    });
@@ -52,28 +55,51 @@ function masterSortingFunction(gamelist, sorttype, isDecsending) {
    }
 }
 sortByPlaytime = function (gameList) {
-   quickSort(gameList, 0, gameList.length, "playtime_forever")
+   return quickSort(gameList, 0, gameList.length - 1, "playtime_forever", false)
 }
 
-quickSort = function (array, startOfArray, endOFArray, objectName) {
-   if (startOfArray < endOFArray) {
-      let piviotPosition = partition(array, startOfArray, endOFArray, objectName)
-      quickSort(array, startOfArray, piviotPosition - 1, objectName)
-      quickSort(array, piviotPosition, endOFArray, objectName)
-   }
-}
-
-partition = function (array, startOfArray, endOFArray, objectName) {
-   let j = startOfArray + 1
-   let piviot = array[startOfArray][objectName]
-   for (i = startOfArray; i <= endOFArray; i++) {
-      if (array[i][objectName] < piviot) {
-         swap(array, j, i)
-         j++
+function partition(array, left, right, objectHandle, decendingTrue) {
+   var pivot = array[Math.floor((right + left) / 2)][objectHandle], //middle element
+      i = left, //left pointer
+      j = right; //right pointer
+   while (i <= j) {
+      if (decendingTrue) {
+         while (array[i][objectHandle] < pivot) {
+            i++;
+         }
+         while (array[j][objectHandle] > pivot) {
+            j--;
+         }
+      }
+      else {
+         while (array[i][objectHandle] > pivot) {
+            i++;
+         }
+         while (array[j][objectHandle] < pivot) {
+            j--;
+         }
+      }
+      if (i <= j) {
+         swap(array, i, j); //sawpping two elements
+         i++;
+         j--;
       }
    }
-   swap (array, array[startOfArray], array[j - 1] )
-   return j - 1
+   return i;
+}
+
+function quickSort(array, left, right, objectHandle, decendingTrue) {
+   var index;
+   if (array.length > 1) {
+      index = partition(array, left, right, objectHandle, decendingTrue); //index returned from partition
+      if (left < index - 1) { //more elements on the left side of the pivot
+         quickSort(array, left, index - 1, objectHandle, decendingTrue);
+      }
+      if (index < right) { //more elements on the right side of the pivot
+         quickSort(array, index, right, objectHandle, decendingTrue);
+      }
+   }
+   return array;
 }
 
 swap = function (array, index1, index2) {
