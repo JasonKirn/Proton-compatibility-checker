@@ -34,4 +34,4 @@ function callSteamModelAndDisplayResults() {
     console.log("Test: " + steamModelCallResults);
 }
 
-callSteamModelAndDisplayResults();
+//callSteamModelAndDisplayResults();
