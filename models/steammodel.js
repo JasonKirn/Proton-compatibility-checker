@@ -1,4 +1,10 @@
+var iterations = 0
+/** getGames is a function which returns gamesretrived from Steamworks API
+ * @param {steam id is the user id to retrive information from} steamid
+ * @param {apikey is a string for Steamworks API access} apikey
+ */
 exports.getGames = function (steamid, apikey) {
+
    //Loads http module
    const http = require("http");
    //Api call string
@@ -18,62 +24,68 @@ exports.getGames = function (steamid, apikey) {
       res.on('end', () => {
          //Parses data (which is a json object) into parasedata variable
          parseddata = JSON.parse(data);
-         //sortByPlaytime(parseddata.response.games)
          return (parseddata.response.games);
       })
    });
 }
-
-
-//Param 1: Game list we are sorting
-//Param 2: What we are sorting on
-//Param 3: Ascending or Descending
-
-//Options to sort on:
-//Title
-//Number hours played (minutes)
-
-function gameNameSorting(gamelist, isDecsending) {
-   //gamename sorting
-}
-
-function playTimeSorting(gamelist, isDecsending) {
-   //playtime sorting
-}
-
-function masterSortingFunction(gamelist, sorttype, isDecsending) {
-   switch (sorttype) {
-      case "gameName":
-         gameNameSorting(gamelist, isDecsending);
-         break;
-      case "playTime":
-         playTimeSorting(gamelist, isDecsending)
-         break;
-   }
-}
-sortByPlaytime = function (gameList) {
-   quickSort(gameList, 0, gameList.length, "playtime_forever")
-}
-
-quickSort = function (array, startOfArray, endOFArray, objectName) {
-   if (startOfArray < endOFArray) {
-      let piviotPosition = partition(array, startOfArray, endOFArray, objectName)
-      quickSort(array, startOfArray, piviotPosition - 1, objectName)
-      quickSort(array, piviotPosition, endOFArray, objectName)
-   }
-}
-
-partition = function (array, startOfArray, endOFArray, objectName) {
-   let j = startOfArray + 1
-   let piviot = array[startOfArray][objectName]
-   for (i = startOfArray; i <= endOFArray; i++) {
-      if (array[i][objectName] < piviot) {
-         swap(array, j, i)
-         j++
+/**
+ * quickSortGames is a quicksort function based on object handling or if decending or ascending
+ * @param {gameList retrived from Steamworks API} gameList 
+ * @param {Left side of the array for sorting} left 
+ * @param {Right side of the array for sorting} right 
+ * @param {objectHandle for what it sorts by} objectHandle 
+ * @param {Set if to sort in decending order} decendingTrue 
+ */
+function quickSortGames(gameList, left, right, objectHandle, decendingTrue) {
+   var index;
+   if (gameList.length > 1) {
+      index = partition(gameList, left, right, objectHandle, decendingTrue); //index returned from partition
+      if (left < index - 1) { //more elements on the left side of the pivot
+         quickSort(gameList, left, index - 1, objectHandle, decendingTrue);
+      }
+      if (index < right) { //more elements on the right side of the pivot
+         quickSort(gameList, index, right, objectHandle, decendingTrue);
       }
    }
-   swap (array, array[startOfArray], array[j - 1] )
-   return j - 1
+   return gameList;
+}
+/**
+ * partition is a helper function for quickwork, partioning the gameList to sort it by the objectHandle
+ * @param {Left side of the array for sorting} left 
+ * @param {Right side of the array for sorting} right 
+ * @param {objectHandle for what it sorts by} objectHandle 
+ * @param {Set if to sort in decending order} decendingTrue 
+ */
+function partition(GameList, left, right, objectHandle, decendingTrue) {
+   var pivot = GameList[Math.floor((right + left) / 2)][objectHandle], //middle element
+      i = left, //left pointer
+      j = right; //right pointer
+   while (i <= j) {
+      //If decendingTrue is true, sorts by decending order
+      if (decendingTrue) {
+         while (GameList[i][objectHandle] < pivot) {
+            i++;
+         }
+         while (GameList[j][objectHandle] > pivot) {
+            j--;
+         }
+      }
+      //else asecending
+      else {
+         while (GameList[i][objectHandle] > pivot) {
+            i++;
+         }
+         while (GameList[j][objectHandle] < pivot) {
+            j--;
+         }
+      }
+      if (i <= j) {
+         swap(GameList, i, j); //sawpping two elements
+         i++;
+         j--;
+      }
+   }
+   return i;
 }
 
 swap = function (array, index1, index2) {
