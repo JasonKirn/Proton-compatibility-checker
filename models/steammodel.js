@@ -1,4 +1,3 @@
-var iterations = 0
 /** getGames is a function which returns gamesretrived from Steamworks API
  * @param {steam id is the user id to retrive information from} steamid
  * @param {apikey is a string for Steamworks API access} apikey

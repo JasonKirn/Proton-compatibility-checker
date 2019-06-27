@@ -6,7 +6,9 @@ var apikey = require("../keys/steamapikey.json")
 //1. Call the steammodel
 //2. Send the results of the steammodel to the view for the user
 var steamModel = require("../models/steammodel.js");
+var protonModel = require("../models/protonmodel.js");
 
+var protonModelCall = protonModel.getRating("39210") //remove later
 function callSteamModelAndDisplayResults() {
 
     var steamResultsPromise = new Promise((resolve, reject) => {
