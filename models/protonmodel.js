@@ -1,22 +1,29 @@
 exports.getRating = function (appid) {
-    const http = require("https");
-	//URL for the GEt request for the unoffical proton db
-    let getRequestURL = "https://protondb.max-p.me/games/" + appid + "/reports/"
-    http.get(getRequestURL, function (res) {
-        //Setting up variables for unparsed and parsed data
-        let data = "";
-        let parseddata = '';
-        //Retriving data from HTTP request, putting code "chunks" into data variable
-        res.on('data', (chunks) => {
+    return new Promise((resolve, reject) => {
+        const http = require("https");
+        //URL for the GEt request for the unoffical proton db
+        let getRequestURL = "https://protondb.max-p.me/games/" + appid + "/reports/"
+        http.get(getRequestURL, function (res) {
+            //Setting up variables for unparsed and parsed data
+            let data = "";
+            let parseddata = '';
+            //Retriving data from HTTP request, putting code "chunks" into data variable
+            res.on('data', (chunks) => {
 
-            data += chunks;
+                data += chunks;
 
-        })
-        //Runs after "end" is recived from HTTP request
-        res.on('end', () => {
-            //Parses data (which is a json object) into parasedata variable
-            parseddata = JSON.parse(data);
-            return (averageRating(parseddata))
+            })
+            //Runs after "end" is recived from HTTP request
+            res.on('end', () => {
+                //Parses data (which is a json object) into parasedata variable
+                parseddata = JSON.parse(data);
+                if (parsedata) {
+                    resolve(averageRating(parseddata))
+                }
+                else {
+                    reject(Error('Something went wrong with getting the parsed data'))
+                }
+            })
         })
     })
 }
@@ -33,11 +40,11 @@ averageRating = function (reportList) {
     if (reportList.length < maxNumberOfReports) {
         maxNumberOfReports = reportList.length;
     }
-    for(i = 0; i < maxNumberOfReports; i++ ) {
+    for (i = 0; i < maxNumberOfReports; i++) {
         //Adds the number of ratings together
         totalRatings += convertRating(reportList[i].rating)
     }
-    return (Math.round(totalRatings/maxNumberOfReports))
+    return (Math.round(totalRatings / maxNumberOfReports))
 }
 /**
  * Takes a rating from the proton DB and converts it to a numaric value to be averaged
