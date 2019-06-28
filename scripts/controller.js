@@ -60,11 +60,11 @@ function fetchUserSteamGames(user, theApiKey) {
     });
 }
 
-fetchUserSteamGames(testUser, apikey)
+/*fetchUserSteamGames(testUser, apikey)
     .then(steamModelCallResults => {
         console.log("Final: " + steamModelCallResults);
     })
-
+*/
 
 function callSteamModelAndDisplayResults() {
 
