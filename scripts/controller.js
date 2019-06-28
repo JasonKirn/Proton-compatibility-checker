@@ -8,7 +8,7 @@ var apikey = require("../keys/steamapikey.json")
 var steamModel = require("../models/steammodel.js");
 var protonModel = require("../models/protonmodel.js");
 
-var protonModelCall = protonModel.getRating("39210") //remove later
+
 function callSteamModelAndDisplayResults() {
 
     var steamResultsPromise = new Promise((resolve, reject) => {

@@ -1,7 +1,8 @@
 exports.getRating = function (appid) {
     const http = require("https");
+	//URL for the GEt request for the unoffical proton db
     let getRequestURL = "https://protondb.max-p.me/games/" + appid + "/reports/"
-    let getRequest = http.get(getRequestURL, function (res) {
+    http.get(getRequestURL, function (res) {
         //Setting up variables for unparsed and parsed data
         let data = "";
         let parseddata = '';
@@ -15,23 +16,32 @@ exports.getRating = function (appid) {
         res.on('end', () => {
             //Parses data (which is a json object) into parasedata variable
             parseddata = JSON.parse(data);
-            console.log(averageRating(parseddata))
+            return (averageRating(parseddata))
         })
     })
 }
 
+/**
+ * Takes a given list of reports from the unoffical proton db API takes the average of (at most) the 5 latest reports. Returning
+ * an average rating
+ */
 averageRating = function (reportList) {
+    //Max numbers of reports to be used in average
     var maxNumberOfReports = 5;
-    var addedReportRatings = 0;
+    var totalRatings = 0;
+    //If the list of reports has less then 5 reports it will use the total number of reports as the Maxium number of reports instead
     if (reportList.length < maxNumberOfReports) {
         maxNumberOfReports = reportList.length;
     }
     for(i = 0; i < maxNumberOfReports; i++ ) {
-        addedReportRatings += convertRating(reportList[i].rating)
+        //Adds the number of ratings together
+        totalRatings += convertRating(reportList[i].rating)
     }
-    return (Math.round(addedReportRatings/maxNumberOfReports))
+    return (Math.round(totalRatings/maxNumberOfReports))
 }
-
+/**
+ * Takes a rating from the proton DB and converts it to a numaric value to be averaged
+ */
 convertRating = function (rating) {
     var convertedRating
     switch (rating) {
