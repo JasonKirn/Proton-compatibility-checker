@@ -4,13 +4,14 @@ var iterations = 0
  * @param {apikey is a string for Steamworks API access} apikey
  */
 exports.getGames = function (steamid, apikey) {
-
+   console.log("First");
    //Loads http module
    const http = require("http");
    //Api call string
    var apicall = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + apikey + "&steamid=" + steamid + "&include_appinfo=1" + "&format=json"
    //HTTP Request
-   let gamesRequest = http.get(apicall, function (res) {
+   //return "cat";
+   let gamesResult = http.get(apicall, function (res) {
       //Setting up variables for unparsed and parsed data
       let data = "";
       let parseddata = '';
@@ -24,9 +25,14 @@ exports.getGames = function (steamid, apikey) {
       res.on('end', () => {
          //Parses data (which is a json object) into parasedata variable
          parseddata = JSON.parse(data);
-         return (parseddata.response.games);
+         //console.log(parseddata);
+         var finalData = parseddata.response.games;
       })
    });
+   console.log(finalData);
+   //console.log(finalData)
+   
+   console.log("Second");
 }
 /**
  * quickSortGames is a quicksort function based on object handling or if decending or ascending
