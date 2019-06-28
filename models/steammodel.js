@@ -7,7 +7,7 @@ var iterations = 0
 var testUser = "76561197979972334";
 var apikey = require("../keys/steamapikey.json")
 
-getGames = function (steamid, apikey) {
+exports.getGames = function (steamid, apikey) {
    return new Promise((resolve, reject) => {
       console.log("This should print First");
       //Loads http module
@@ -43,9 +43,7 @@ getGames = function (steamid, apikey) {
    })
 }
 
-getGames(testUser, apikey.key)
-   .then(finalData => {"Here we go:" + console.log(finalData)})
-   .catch(console.log(Error))
+
 /**
  * quickSortGames is a quicksort function based on object handling or if decending or ascending
  * @param {gameList retrived from Steamworks API} gameList 
