@@ -4,26 +4,31 @@ exports.getRating = function (appid) {
         //URL for the GEt request for the unoffical proton db
         let getRequestURL = "https://protondb.max-p.me/games/" + appid + "/reports/"
         http.get(getRequestURL, function (res) {
-            //Setting up variables for unparsed and parsed data
-            let data = "";
-            let parseddata = '';
-            //Retriving data from HTTP request, putting code "chunks" into data variable
-            res.on('data', (chunks) => {
+            if (res.statusCode == 200) {
+                //Setting up variables for unparsed and parsed data
+                let data = "";
+                let parseddata = '';
+                //Retriving data from HTTP request, putting code "chunks" into data variable
+                res.on('data', (chunks) => {
 
-                data += chunks;
+                    data += chunks;
 
-            })
-            //Runs after "end" is recived from HTTP request
-            res.on('end', () => {
-                //Parses data (which is a json object) into parasedata variable
-                parseddata = JSON.parse(data);
-                if (parsedata) {
-                    resolve(averageRating(parseddata))
-                }
-                else {
-                    reject(Error('Something went wrong with getting the parsed data'))
-                }
-            })
+                })
+                //Runs after "end" is recived from HTTP request
+                res.on('end', () => {
+                    //Parses data (which is a json object) into parasedata variable
+                    parseddata = JSON.parse(data);
+                    if (parsedata) {
+                        resolve(averageRating(parseddata))
+                    }
+                    else {
+                        reject(Error('Something went wrong with getting the parsed data'))
+                    }
+                })
+            }
+            else {
+                reject(Error("Invalid Status Code: " + res.statusCode))
+            }
         })
     })
 }
