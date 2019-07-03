@@ -1,4 +1,4 @@
-exports.getRating = function (appid) {
+getRating = function (appid) {
     return new Promise((resolve, reject) => {
         const http = require("https");
         //URL for the GEt request for the unoffical proton db
@@ -74,4 +74,23 @@ convertRating = function (rating) {
             break;
     }
     return convertedRating;
+}
+
+exports.processGameList = function (gameList) {
+    var gameListRating = new Array();
+    console.log(gameList[0].appid)
+    
+    for (i = 0; i < gameList.length; i++) {
+        var rating = getRating(gameList[i].appid)
+            .then(
+                console.log(rating),
+                gameListRating.push({
+                    appID: gameList[i].appid,
+                    rating: "-5"
+                })
+            )
+        return gameList;
+    }
+    console.log(gameListRating[1].rating)
+
 }

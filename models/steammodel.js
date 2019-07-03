@@ -7,14 +7,12 @@
 
 exports.getGames = function (steamid, apikey) {
    return new Promise((resolve, reject) => {
-      console.log("This should print First");
       //Loads http module
       const http = require("http");
       //Api call string
       var apicall = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + apikey + "&steamid=" + steamid + "&include_appinfo=1" + "&format=json"
       //HTTP Request
 
-      var testVar = "This should print third";
 
       http.get(apicall, function (res) {
          if (res.statusCode == 200) {
@@ -30,7 +28,6 @@ exports.getGames = function (steamid, apikey) {
                //Parses data (which is a json object) into parasedata variable
                parseddata = JSON.parse(data);
                //console.log(parseddata);
-               console.log("This should print 2nd");
                var finalData = parseddata.response.games;
                if (finalData) {
                   resolve(finalData);
