@@ -5,7 +5,12 @@ var apikey = require("../keys/steamapikey.json")
 
 //1. Call the steammodel
 //2. Send the results of the steammodel to the view for the user
-var steamModel = require("../models/steammodel.js");
-steamModel.getGames(testUser, apikey.key)
+var SteamModel = require("../models/steammodel.js");
+/*steamModel.getGames(testUser, apikey.key)
    .then(finalData => {"Here we go:" + console.log(finalData)})
+   .catch(console.log(Error))
+*/
+var steamModel = new SteamModel(apikey)
+steamModel.retriveGames(testUser)
+   .then(finalData => { "Here we go:" + console.log(finalData) })
    .catch(console.log(Error))

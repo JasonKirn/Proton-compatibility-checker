@@ -5,7 +5,7 @@
 
 
 
-exports.getGames = function (steamid, apikey) {
+/* exports.getGames = function (steamid, apikey) {
    return new Promise((resolve, reject) => {
       console.log("This should print First");
       //Loads http module
@@ -41,13 +41,13 @@ exports.getGames = function (steamid, apikey) {
             })
          }
          else {
-            reject(Error("Invalid Status Code: " + res.statusCode))       
+            reject(Error("Invalid Status Code: " + res.statusCode))
          }
       });
    })
 }
 
-
+*/
 /**
  * quickSortGames is a quicksort function based on object handling or if decending or ascending
  * @param {gameList retrived from Steamworks API} gameList 
@@ -113,3 +113,55 @@ swap = function (array, index1, index2) {
    array[index1] = array[index2]
    array[index2] = temp
 }
+
+
+class SteamModel {
+   constructor(apiKey) {
+      this.apiKey = apiKey
+   }
+   retriveGames(steamid) {
+      return new Promise((resolve, reject) => {
+         console.log("This should print First");
+         //Loads http module
+         const http = require("http");
+         //Api call string
+         var apicall = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + this.apiKey + "&steamid=" + steamid + "&include_appinfo=1" + "&format=json"
+         //HTTP Request
+
+         var testVar = "This should print third";
+
+         http.get(apicall, function (res) {
+            if (res.statusCode == 200) {
+               //Setting up variables for unparsed and parsed data
+               let data = "";
+               let parseddata = '';
+               //Retriving data from HTTP request, putting code "chunks" into data variable
+               res.on('data', (chunks) => {
+                  data += chunks;
+               })
+               //Runs after "end" is recived from HTTP request
+               res.on('end', () => {
+                  //Parses data (which is a json object) into parasedata variable
+                  parseddata = JSON.parse(data);
+                  //console.log(parseddata);
+                  console.log("This should print 2nd");
+                  var finalData = parseddata.response.games;
+                  if (finalData) {
+                     resolve(gameList = finalData);
+                  }
+                  else {
+                     reject(Error('Something went wrong with getting the parsed data'))
+                  }
+               })
+            }
+            else {
+               reject(Error("Invalid Status Code: " + res.statusCode))
+            }
+         });
+      })
+   }
+}
+module.exports = SteamModel
+
+//var steamModel = new SteamModel("79841646714619864")
+//steamModel.retriveGames("7213773712")
