@@ -1,16 +1,61 @@
 class Gameslist {
-    constructor(){
+    constructor() {
         this.gameList = new Array();
     }
 
-    sortList(isAscending) {
-        for (var i = 0; i < this.gameList.length; i++) {
+    sortList(objectHandle, decendingTrue) {
+        var left = 0;
+        var right = this.gameList.length
+        if (this.gameList.length > 1) {
+            index = partition(this.gameList, left, right, objectHandle, decendingTrue); //index returned from partition
+            if (left < index - 1) { //more elements on the left side of the pivot
+                quickSort(this.gameList, left, index - 1, objectHandle, decendingTrue);
+            }
+            if (index < right) { //more elements on the right side of the pivot
+                quickSort(this.gameList, index, right, objectHandle, decendingTrue);
+            }
+        }
+        function partition(GameList, left, right, objectHandle, decendingTrue) {
+            var pivot = GameList[Math.floor((right + left) / 2)][objectHandle], //middle element
+                i = left, //left pointer
+                j = right; //right pointer
+            while (i <= j) {
+                //If decendingTrue is true, sorts by decending order
+                if (decendingTrue) {
+                    while (GameList[i][objectHandle] < pivot) {
+                        i++;
+                    }
+                    while (GameList[j][objectHandle] > pivot) {
+                        j--;
+                    }
+                }
+                //else asecending
+                else {
+                    while (GameList[i][objectHandle] > pivot) {
+                        i++;
+                    }
+                    while (GameList[j][objectHandle] < pivot) {
+                        j--;
+                    }
+                }
+                if (i <= j) {
+                    swap(GameList, i, j); //sawpping two elements
+                    i++;
+                    j--;
+                }
+            }
+            return i;
+        }
 
+        swap = function (array, index1, index2) {
+            let temp = array[index1]
+            array[index1] = array[index2]
+            array[index2] = temp
         }
     }
 
     addGame(name, appid, imgurl, rating) {
-        this.gameList.push(new Game(name, appid, imgurl,rating));
+        this.gameList.push(new Game(name, appid, imgurl, rating));
     }
 }
 //
