@@ -4,11 +4,13 @@ class Gameslist {
     }
 
     sortList(isAscending) {
-        //Will use isAscending boolean to determine if the list is to be sorted ascending or descending order
+        for (var i = 0; i < this.gameList.length; i++) {
+
+        }
     }
 
     addGame(name, appid, imgurl, rating) {
-        //adds a game to the gameList array
+        this.gameList.push(new Game(name, appid, imgurl,rating));
     }
 }
 //
@@ -22,4 +24,5 @@ class Game {
         this.rating = rating;
     }
 }
-module.exports = Game;
+
+module.exports = Gameslist;

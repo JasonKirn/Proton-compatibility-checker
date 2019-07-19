@@ -121,11 +121,27 @@ swap = function (array, index1, index2) {
 //class game 
 //extracting the neccesary data for each game from the raw data, into a game object
 
+var GamesList = require("../models/gamelistmodel.js");
 
+var gamesList = new GamesList();
 
 class SteamModel {
    constructor(apiKey) {
-      this.apiKey = apiKey
+      this.apiKey = apiKey;
+      this.finalData;
+   }
+
+   pushGameToGameListModel(finalData) {
+
+      //extract the neccesary data we need for each game
+
+      for (var i = 0; i < finalData.length; i++) {
+         gamesList.addGame(finalData[i].name, finalData[i].appid, finalData[i].img_logo_url, null)
+      }
+
+      gamesList.sortList(null);
+
+      
    }
 
    retriveGames(steamid) {
@@ -137,8 +153,6 @@ class SteamModel {
          var apicall = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + this.apiKey.key + "&steamid=" + steamid + "&include_appinfo=1" + "&format=json"
          //HTTP Request
          console.log(apicall);
-
-         var testVar = "This should print third";
 
          http.get(apicall, function (res) {
             if (res.statusCode == 200) {
@@ -172,6 +186,8 @@ class SteamModel {
       })
    }
 }
+
+
 module.exports = SteamModel
 //module.exports = newClassName
 
