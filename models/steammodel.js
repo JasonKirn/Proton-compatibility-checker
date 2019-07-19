@@ -114,19 +114,29 @@ swap = function (array, index1, index2) {
    array[index2] = temp
 }
 
+//class gamesList
+//we send all the game objects, to gamesList and here we organize into an array or container and have functions to sort it as requested per the user
+
+
+//class game 
+//extracting the neccesary data for each game from the raw data, into a game object
+
+
 
 class SteamModel {
    constructor(apiKey) {
       this.apiKey = apiKey
    }
+
    retriveGames(steamid) {
       return new Promise((resolve, reject) => {
          console.log("This should print First");
          //Loads http module
          const http = require("http");
          //Api call string
-         var apicall = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + this.apiKey + "&steamid=" + steamid + "&include_appinfo=1" + "&format=json"
+         var apicall = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + this.apiKey.key + "&steamid=" + steamid + "&include_appinfo=1" + "&format=json"
          //HTTP Request
+         console.log(apicall);
 
          var testVar = "This should print third";
 
@@ -146,8 +156,9 @@ class SteamModel {
                   //console.log(parseddata);
                   console.log("This should print 2nd");
                   var finalData = parseddata.response.games;
+                  
                   if (finalData) {
-                     resolve(gameList = finalData);
+                     resolve(this.gameList = finalData);
                   }
                   else {
                      reject(Error('Something went wrong with getting the parsed data'))
@@ -162,6 +173,7 @@ class SteamModel {
    }
 }
 module.exports = SteamModel
+//module.exports = newClassName
 
 //var steamModel = new SteamModel("79841646714619864")
 //steamModel.retriveGames("7213773712")

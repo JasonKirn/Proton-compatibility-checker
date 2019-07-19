@@ -12,5 +12,6 @@ var SteamModel = require("../models/steammodel.js");
 */
 var steamModel = new SteamModel(apikey)
 steamModel.retriveGames(testUser)
-   .then(finalData => { "Here we go:" + console.log(finalData) })
+   .then(finalData => { "Here we go:" /*+ console.log(finalData)*/ })
    .catch(console.log(Error))
+console.log(steamModel.apiKey)
