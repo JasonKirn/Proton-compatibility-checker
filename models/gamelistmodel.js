@@ -11,7 +11,7 @@ class Gameslist {
         //adds a game to the gameList array
     }
 }
-
+//
 
 //Holds only the neccessary info we need from each game in the api results called from steammodel
 class Game {
