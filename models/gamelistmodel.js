@@ -3,6 +3,10 @@ class Gameslist {
         this.gameList = new Array();
     }
 
+    importSteamGameList(gameListData) {
+        
+    }
+
     sortList(objectHandle, decendingTrue) {
         var left = 0;
         var right = this.gameList.length
