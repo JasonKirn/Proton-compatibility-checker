@@ -1,12 +1,14 @@
 var testUser = "76561197979972334";
-var apikey = require("../keys/steamapikey.json")
+var apikey = require("../keys/steamapikey.json");
 
 
 var SteamModel = require("../models/steammodel.js");
+var GameListModel = require("../models/gamelistmodel.js");
 
+var steamModel = new SteamModel(apikey);
+var gameListModel = new GameListModel();
 
-var steamModel = new SteamModel(apikey)
 
 steamModel.retriveGames(testUser)
-   .then(unprocessedSteamData => {console.log(unprocessedSteamData)})
+   .then(unprocessedSteamData => {gameListModel.importSteamGameList(unprocessedSteamData)})
    .catch(Error)

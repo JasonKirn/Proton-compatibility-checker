@@ -4,7 +4,13 @@ class Gameslist {
     }
 
     importSteamGameList(gameListData) {
+
+        for (var i = 0; i < gameListData.length; i++) {
+            this.addGame(gameListData[i].name, gameListData[i].appid, gameListData[i].img_logo_url, null)
+        }
         
+        this.printGameList();
+
     }
 
     sortList(objectHandle, decendingTrue) {
@@ -60,6 +66,14 @@ class Gameslist {
 
     addGame(name, appid, imgurl, rating) {
         this.gameList.push(new Game(name, appid, imgurl, rating));
+    }
+
+    getGameList() {
+        return this.gameList;
+    }
+
+    printGameList() {
+        console.log(this.gameList)
     }
 }
 //
