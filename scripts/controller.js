@@ -8,7 +8,14 @@ var GameListModel = require("../models/gamelistmodel.js");
 var steamModel = new SteamModel(apikey);
 var gameListModel = new GameListModel();
 
-
 steamModel.retriveGames(testUser)
-   .then(unprocessedSteamData => {gameListModel.importSteamGameList(unprocessedSteamData)})
+   .then(unprocessedSteamData => { proccessSteamData(unprocessedSteamData) })
    .catch(Error)
+
+
+
+
+proccessSteamData = function (unprocessedSteamData) {
+   gameListModel.importSteamGameList(unprocessedSteamData);
+   gameListModel.printGameList();
+}
