@@ -8,6 +8,8 @@ var GameListModel = require("../models/gamelistmodel.js");
 var steamModel = new SteamModel(apikey);
 var gameListModel = new GameListModel();
 
+var ProtonModel = require("../models/protonmodel.js")
+
 steamModel.retriveGames(testUser)
    .then(unprocessedSteamData => { proccessSteamData(unprocessedSteamData) })
    .catch(console.log(Error))
@@ -18,6 +20,7 @@ steamModel.retriveGames(testUser)
 proccessSteamData = function (unprocessedSteamData) {
    gameListModel.importSteamGameList(unprocessedSteamData);
    sortGameList("name", true)
+   ProtonModel.processGameList(gameListModel)
 }
 
 sortGameList = function (objectHandle, isDecending) {

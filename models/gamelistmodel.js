@@ -87,6 +87,9 @@ class Gameslist {
         else return string
         
     }
+    getGame(index) {
+        return this.gameList[index]
+    }
 }
 //
 
@@ -96,6 +99,30 @@ class Game {
         this.name = name;
         this.appid = appid;
         this.imgurl = imgurl;
+        this.rating = rating;
+    }
+    getName() {
+        return this.name
+    }
+    setName(name) {
+        this.name = name; 
+    }
+    getappid() {
+        return this.appid
+    }
+    setappid(appid) {
+        this.appid = appid
+    }
+    getimgurl() {
+        return this.imgurl
+    }
+    setimgurl(imgurl) {
+        this.imgurl = imgurl
+    }
+    getrating() {
+        return this.rating
+    }
+    setrating(rating) {
         this.rating = rating;
     }
 }

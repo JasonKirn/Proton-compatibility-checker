@@ -18,7 +18,7 @@ getRating = function (appid) {
                 res.on('end', () => {
                     //Parses data (which is a json object) into parasedata variable
                     parseddata = JSON.parse(data);
-                    if (parsedata) {
+                    if (parseddata) {
                         resolve(averageRating(parseddata))
                     }
                     else {
@@ -77,20 +77,10 @@ convertRating = function (rating) {
 }
 
 exports.processGameList = function (gameList) {
-    var gameListRating = new Array();
-    console.log(gameList[0].appid)
-    
-    for (i = 0; i < gameList.length; i++) {
-        var rating = getRating(gameList[i].appid)
-            .then(
-                console.log(rating),
-                gameListRating.push({
-                    appID: gameList[i].appid,
-                    rating: "-5"
-                })
-            )
-        return gameList;
+    var i = 0;
+    while (i < gameList.getGameList().length) {
+        getRating(gameList.getGame(i).getappid())
+            .then(rating => { console.log(i)})
+            .then(i++)
     }
-    console.log(gameListRating[1].rating)
-
 }
