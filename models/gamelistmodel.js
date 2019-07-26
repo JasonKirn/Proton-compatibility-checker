@@ -7,56 +7,56 @@ class Gameslist {
 
         for (var i = 0; i < gameListData.length; i++) {
             this.addGame(gameListData[i].name, gameListData[i].appid, gameListData[i].img_logo_url, null)
+            
         }
-
-        this.sortList("name", true)
-
+        this.sortList("appid", true)
     }
 
     sortList(objectHandle, decendingTrue) {
         var left = 0;
-        var right = this.gameList.length
-        this.quickSort(this.gameList, left, right, objectHandle, decendingTrue)
+        var right = this.gameList.length-1
+        this.quickSort(left, right, objectHandle, decendingTrue)
     }
-
-    quickSort(gameList, left, right, objectHandle, decendingTrue) {
+    //TODO: Add name detection for other sort types.
+    quickSort(left, right, objectHandle, decendingTrue) {
         var index;
-        if (gameList.length > 1) {
-            index = this.partition(gameList, left, right, objectHandle, decendingTrue); //index returned from partition
+        if (this.gameList.length > 2) {
+            index = this.partition(left, right, objectHandle, decendingTrue); //index returned from partition
             if (left < index - 1) { //more elements on the left side of the pivot
-                this.quickSort(gameList, left, index - 1, objectHandle, decendingTrue);
+                this.quickSort(left, index - 1, objectHandle, decendingTrue);
             }
             if (index < right) { //more elements on the right side of the pivot
-                this.quickSort(gameList, index, right, objectHandle, decendingTrue);
+                this.quickSort(index, right, objectHandle, decendingTrue);
             }
         }
     }
 
-    partition(GameList, left, right, objectHandle, decendingTrue) {
-        var pivot = GameList[Math.floor((right + left) / 2)][objectHandle], //middle element
+    partition(left, right, objectHandle, decendingTrue) {
+        var pivot = this.gameList[Math.floor((right + left) / 2)][objectHandle], //middle element
             i = left, //left pointer
             j = right; //right pointer
+
         while (i <= j) {
             //If decendingTrue is true, sorts by decending order
             if (decendingTrue) {
-                while (GameList[i][objectHandle] < pivot) {
+                while (this.getUppercaseStringValue(this.gameList[i][objectHandle]) < this.getUppercaseStringValue(pivot)) {
                     i++;
                 }
-                while (GameList[j][objectHandle] > pivot) {
+                while (this.getUppercaseStringValue(this.gameList[j][objectHandle]) > this.getUppercaseStringValue(pivot)) {
                     j--;
                 }
             }
             //else asecending
             else {
-                while (GameList[i][objectHandle] > pivot) {
+                while (this.getUppercaseStringValue(this.gameList[i][objectHandle]) > this.getUppercaseStringValue(pivot)) {
                     i++;
                 }
-                while (GameList[j][objectHandle] < pivot) {
+                while (this.getUppercaseStringValue(this.gameList[j][objectHandle]) < this.getUppercaseStringValue(pivot)) {
                     j--;
                 }
             }
             if (i <= j) {
-                this.swap(GameList, i, j); //sawpping two elements
+                this.swap(this.gameList, i, j); //sawpping two elements
                 i++;
                 j--;
             }
@@ -81,6 +81,13 @@ class Gameslist {
 
     printGameList() {
         console.log(this.gameList)
+    }
+    getUppercaseStringValue(string) {
+        if (typeof string === 'string' || string instanceof String) {
+            return string.toUpperCase()
+        }
+        else return string
+        
     }
 }
 //

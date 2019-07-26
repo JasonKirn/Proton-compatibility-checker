@@ -32,7 +32,6 @@ class SteamModel {
          //Api call string
          var apicall = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + this.apiKey.key + "&steamid=" + steamid + "&include_appinfo=1" + "&format=json"
          //HTTP Request
-
          http.get(apicall, function (res) {
             if (res.statusCode == 200) {
                //Setting up variables for unparsed and parsed data

@@ -10,7 +10,7 @@ var gameListModel = new GameListModel();
 
 steamModel.retriveGames(testUser)
    .then(unprocessedSteamData => { proccessSteamData(unprocessedSteamData) })
-   .catch(Error)
+   .catch(console.log(Error))
 
 
 
