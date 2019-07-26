@@ -7,9 +7,7 @@ class Gameslist {
 
         for (var i = 0; i < gameListData.length; i++) {
             this.addGame(gameListData[i].name, gameListData[i].appid, gameListData[i].img_logo_url, null)
-            
         }
-        this.sortList("appid", true)
     }
 
     sortList(objectHandle, decendingTrue) {
@@ -17,7 +15,7 @@ class Gameslist {
         var right = this.gameList.length-1
         this.quickSort(left, right, objectHandle, decendingTrue)
     }
-    //TODO: Add name detection for other sort types.
+
     quickSort(left, right, objectHandle, decendingTrue) {
         var index;
         if (this.gameList.length > 2) {

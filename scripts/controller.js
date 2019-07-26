@@ -17,5 +17,9 @@ steamModel.retriveGames(testUser)
 
 proccessSteamData = function (unprocessedSteamData) {
    gameListModel.importSteamGameList(unprocessedSteamData);
-   gameListModel.printGameList();
+   sortGameList("name", true)
+}
+
+sortGameList = function (objectHandle, isDecending) {
+   gameListModel.sortList(objectHandle, isDecending)
 }
