@@ -3,48 +3,6 @@
  * @param {apikey is a string for Steamworks API access} apikey
  */
 
-
-
-exports.getGames = function (steamid, apikey) {
-   return new Promise((resolve, reject) => {
-      //Loads http module
-      const http = require("http");
-      //Api call string
-      var apicall = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + apikey + "&steamid=" + steamid + "&include_appinfo=1" + "&format=json"
-      //HTTP Request
-
-
-      http.get(apicall, function (res) {
-         if (res.statusCode == 200) {
-            //Setting up variables for unparsed and parsed data
-            let data = "";
-            let parseddata = '';
-            //Retriving data from HTTP request, putting code "chunks" into data variable
-            res.on('data', (chunks) => {
-               data += chunks;
-            })
-            //Runs after "end" is recived from HTTP request
-            res.on('end', () => {
-               //Parses data (which is a json object) into parasedata variable
-               parseddata = JSON.parse(data);
-               //console.log(parseddata);
-               var finalData = parseddata.response.games;
-               if (finalData) {
-                  resolve(finalData);
-               }
-               else {
-                  reject(Error('Something went wrong with getting the parsed data'))
-               }
-            })
-         }
-         else {
-            reject(Error("Invalid Status Code: " + res.statusCode))       
-         }
-      });
-   })
-}
-
-
 /**
  * quickSortGames is a quicksort function based on object handling or if decending or ascending
  * @param {gameList retrived from Steamworks API} gameList 
