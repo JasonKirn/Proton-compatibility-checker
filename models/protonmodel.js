@@ -78,9 +78,13 @@ convertRating = function (rating) {
 
 exports.processGameList = function (gameList) {
     var i = 0;
-    while (i < gameList.getGameList().length) {
-        getRating(gameList.getGame(i).getappid())
-            .then(rating => { console.log(i)})
-            .then(i++)
+    while(i < gameList.getGameList().length) {
+        whilePromise = new Promise((resolve) => {
+            getRating(gameList.getGame(i).getappid())
+            .then(rating => gameList.getGame(i).setrating(rating))
+            .then(resolve())
+        })
+        .then(i++)
     }
+
 }
