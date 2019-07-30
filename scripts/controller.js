@@ -1,25 +1,24 @@
-var testUser = "76561197979972334";
-var apikey = require("../keys/steamapikey.json");
+class Controller {
+   constructor() {
+      this.apikey = require("../keys/steamapikey.json");
+      this.SteamModelObject = require("../models/steammodel.js");
+      this.GameListModelObject = require("../models/gamelistmodel.js");
+      this.steamModel = new SteamModelObject(this.apikey)
+      this.gameListModel = new GameListModelObject();
+   }
+   retriveSteamGames(user) {
+      this.steamModel.retriveGames(user)
+         .then(unprocessedSteamData => { proccessSteamData(unprocessedSteamData) })
+         .catch(console.log(Error))
 
+      proccessSteamData = function (unprocessedSteamData) {
+         gameListModel.importSteamGameList(unprocessedSteamData);
+         this.sortGameList("name", true)
+      }
+   }
 
-var SteamModel = require("../models/steammodel.js");
-var GameListModel = require("../models/gamelistmodel.js");
+   sortGameList(objectHandle, isDecending) {
+      this.gameListModel.sortList(objectHandle, isDecending)
+   }
 
-var steamModel = new SteamModel(apikey);
-var gameListModel = new GameListModel();
-
-steamModel.retriveGames(testUser)
-   .then(unprocessedSteamData => { proccessSteamData(unprocessedSteamData) })
-   .catch(console.log(Error))
-
-
-
-
-proccessSteamData = function (unprocessedSteamData) {
-   gameListModel.importSteamGameList(unprocessedSteamData);
-   sortGameList("name", true)
-}
-
-sortGameList = function (objectHandle, isDecending) {
-   gameListModel.sortList(objectHandle, isDecending)
 }
