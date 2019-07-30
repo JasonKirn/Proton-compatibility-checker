@@ -28,3 +28,4 @@ class Controller {
 var testUser = "76561197979972334";
 controller = new Controller()
 controller.retriveSteamGames(testUser)
+module.exports = Controller
