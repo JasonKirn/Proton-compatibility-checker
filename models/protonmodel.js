@@ -78,11 +78,14 @@ convertRating = function (rating) {
 
 exports.processGameList = async function (gameList) {
     var i = 0;
-    while (i < gameList.getGameList().length) {
-        var rating = await getRating(gameList.getGame(i).getappid());
-        gameList.getGame(i).setrating(rating)
-        i++
+    var Promises = new Array()
+    for(var i = 0; i <gameList.getGameList().length; i++) {
+        Promises.push(getRating(gameList.getGame(i).getappid()))
     }
-    gameList.printGameList()
-
+    for(var i = 0; i < gameList.getGameList().length; i++) {
+        var rating
+        await Promises[i]
+        .then(result => rating = result)
+        gameList.getGame(i).setrating(rating)
+    }
 }
