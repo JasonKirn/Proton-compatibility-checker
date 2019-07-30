@@ -76,15 +76,13 @@ convertRating = function (rating) {
     return convertedRating;
 }
 
-exports.processGameList = function (gameList) {
+exports.processGameList = async function (gameList) {
     var i = 0;
-    while(i < gameList.getGameList().length) {
-        whilePromise = new Promise((resolve) => {
-            getRating(gameList.getGame(i).getappid())
-            .then(rating => gameList.getGame(i).setrating(rating))
-            .then(resolve())
-        })
-        .then(i++)
+    while (i < gameList.getGameList().length) {
+        var rating = await getRating(gameList.getGame(i).getappid());
+        gameList.getGame(i).setrating(rating)
+        i++
     }
+    gameList.printGameList()
 
 }
