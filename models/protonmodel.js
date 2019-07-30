@@ -1,5 +1,11 @@
 class ProtonModel {
-    getRating(appid) {
+
+    async getRating(appid) {
+        var reportList = await this.getRatingReports(appid)
+        this.averageRating(reportList)
+    }
+
+    getRatingReports(appid) {
         return new Promise((resolve, reject) => {
             const http = require("https");
             //URL for the GEt request for the unoffical proton db
@@ -20,7 +26,7 @@ class ProtonModel {
                         //Parses data (which is a json object) into parasedata variable
                         parseddata = JSON.parse(data);
                         if (parseddata) {
-                            resolve(this.averageRating(parseddata))
+                            resolve(parseddata)
                         }
                         else {
                             reject(Error('Something went wrong with getting the parsed data'))
@@ -46,7 +52,7 @@ class ProtonModel {
         if (reportList.length < maxNumberOfReports) {
             maxNumberOfReports = reportList.length;
         }
-        for (i = 0; i < maxNumberOfReports; i++) {
+        for (var i = 0; i < maxNumberOfReports; i++) {
             //Adds the number of ratings together
             totalRatings += this.convertRating(reportList[i].rating)
         }
@@ -57,7 +63,7 @@ class ProtonModel {
     /**
      * Takes a rating from the proton DB and converts it to a numaric value to be averaged
      */
-    convertRating = function (rating) {
+    convertRating(rating) {
         var convertedRating
         switch (rating) {
             case "Platinum":
@@ -79,7 +85,7 @@ class ProtonModel {
         return convertedRating;
     }
 
-    processGameList = async function (gameList) {
+    async processGameList(gameList) {
         var i = 0;
         var Promises = new Array()
         for (var i = 0; i < gameList.getGameList().length; i++) {
@@ -91,5 +97,8 @@ class ProtonModel {
                 .then(result => rating = result)
             gameList.getGame(i).setrating(rating)
         }
+        gameList.printGameList()
     }
+
 }
+module.exports = ProtonModel
