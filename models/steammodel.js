@@ -1,67 +1,53 @@
-/** getGames is a function which returns gamesretrived from Steamworks API
- * @param {steam id is the user id to retrive information from} steamid
- * @param {apikey is a string for Steamworks API access} apikey
- */
-
-/**
- * quickSortGames is a quicksort function based on object handling or if decending or ascending
- * @param {gameList retrived from Steamworks API} gameList 
- * @param {Left side of the array for sorting} left 
- * @param {Right side of the array for sorting} right 
- * @param {objectHandle for what it sorts by} objectHandle 
- * @param {Set if to sort in decending order} decendingTrue 
- */
-/**
- * partition is a helper function for quickwork, partioning the gameList to sort it by the objectHandle
- * @param {Left side of the array for sorting} left 
- * @param {Right side of the array for sorting} right 
- * @param {objectHandle for what it sorts by} objectHandle 
- * @param {Set if to sort in decending order} decendingTrue 
- */
-
 class SteamModel {
    constructor(apiKey) {
       this.apiKey = apiKey;
       this.finalData;
    }
 
-   retriveGames(steamid) {
+   retriveGames(steamId) {
       return new Promise((resolve, reject) => {
          //Loads http module
          const http = require("http");
+         
          //Api call string
-         var apicall = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + this.apiKey.key + "&steamid=" + steamid + "&include_appinfo=1" + "&format=json"
+         var apiCall = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + this.apiKey.key + "&steamid=" + steamId + "&include_appinfo=1" + "&format=json";
+         
          //HTTP Request
-         http.get(apicall, function (res) {
+         http.get(apiCall, function (res) {
+
+            //If we get any status code besides "OK" 200, we will print it out in the else statement to further understand what's going on with the api call
             if (res.statusCode == 200) {
-               //Setting up variables for unparsed and parsed data
-               let data = "";
-               let parseddata = '';
-               //Retriving data from HTTP request, putting code "chunks" into data variable
+               let unparsedData = "";
+               let parsedData = '';
+               
+               //Retriving data from HTTP request, putting code "chunks" into unparsedData variable
                res.on('data', (chunks) => {
-                  data += chunks;
+                  unparsedData += chunks;
                })
+               
                //Runs after "end" is recived from HTTP request
                res.on('end', () => {
-                  //Parses data (which is a json object) into parasedata variable
-                  parseddata = JSON.parse(data);
+               
+                  //Parses data into JSON format
+                  parsedData = JSON.parse(unparsedData);
 
-                  var finalData = parseddata.response.games;
+                  var finalData = parsedData.response.games;
                   
+                  //If the data is not undefined, we know the apicall returned data, so we will resolve. Otherwise throw a rejection error
                   if (finalData) {
                      resolve(finalData);
                   }
                   else {
-                     reject(Error('Something went wrong with getting the parsed data'))
+                     reject(Error('Something went wrong with getting the parsed data'));
                   }
                })
             }
             else {
-               reject(Error("Invalid Status Code: " + res.statusCode))
+               reject(Error("Invalid Status Code: " + res.statusCode));
             }
          });
       })
    }
 }
 
-module.exports = SteamModel
+module.exports = SteamModel;
