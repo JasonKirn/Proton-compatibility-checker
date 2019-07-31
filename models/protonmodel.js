@@ -1,10 +1,17 @@
 class ProtonModel {
-
+    /**
+     * getRatings is a wrapper for appid. Taking an appid and returing the averageRating
+     * @param {appid from Steam that will check the reports from Proton} appid 
+     * @return {The average rating of a given ratings report}
+     */
     async getRating(appid) {
-        var reportList = await this.getRatingReports(appid)
-        this.averageRating(reportList)
+        var reportList = await this.getRatingReports(appid);
+        return this.averageRating(reportList);
     }
-
+    /**
+     * getRatingReports will retrive a ratings report from the unoffical ProtonDB
+     * @param {appId from Steam that will check and return a list of preformance reports from the unoffical protondb API} appid 
+     */
     getRatingReports(appid) {
         return new Promise((resolve, reject) => {
             const http = require("https");
@@ -13,28 +20,28 @@ class ProtonModel {
             http.get(getRequestURL, function (res) {
                 if (res.statusCode == 200) {
                     //Setting up variables for unparsed and parsed data
-                    let data = "";
-                    let parseddata = '';
+                    let unprasedData = "";
+                    let parsedData = '';
                     //Retriving data from HTTP request, putting code "chunks" into data variable
                     res.on('data', (chunks) => {
 
-                        data += chunks;
+                        unprasedData += chunks;
 
                     })
                     //Runs after "end" is recived from HTTP request
                     res.on('end', () => {
                         //Parses data (which is a json object) into parasedata variable
-                        parseddata = JSON.parse(data);
-                        if (parseddata) {
-                            resolve(parseddata)
+                        parsedData = JSON.parse(unprasedData);
+                        if (parsedData) {
+                            resolve(parsedData);
                         }
                         else {
-                            reject(Error('Something went wrong with getting the parsed data'))
+                            reject(Error('Something went wrong with getting the parsed data'));
                         }
                     })
                 }
                 else {
-                    reject(Error("Invalid Status Code: " + res.statusCode))
+                    reject(Error("Invalid Status Code: " + res.statusCode));
                 }
             })
         })
@@ -54,9 +61,9 @@ class ProtonModel {
         }
         for (var i = 0; i < maxNumberOfReports; i++) {
             //Adds the number of ratings together
-            totalRatings += this.convertRating(reportList[i].rating)
+            totalRatings += this.convertRating(reportList[i].rating);
         }
-        return (Math.round(totalRatings / maxNumberOfReports))
+        return (Math.round(totalRatings / maxNumberOfReports));
     }
 
 
@@ -64,7 +71,7 @@ class ProtonModel {
      * Takes a rating from the proton DB and converts it to a numaric value to be averaged
      */
     convertRating(rating) {
-        var convertedRating
+        var convertedRating;
         switch (rating) {
             case "Platinum":
                 convertedRating = 5;
@@ -84,20 +91,25 @@ class ProtonModel {
         }
         return convertedRating;
     }
-
+    /**
+     * Takes a Game List object and assigns them their protonDb Rating given the appID
+     * @param {A populated gameList from the SteamMOdel} gameList 
+     */
     async processGameList(gameList) {
-        var i = 0;
-        var Promises = new Array()
+        //An array of promises used later for await
+        var promises = new Array();
         for (var i = 0; i < gameList.getGameList().length; i++) {
-            Promises.push(this.getRating(gameList.getGame(i).getappid()))
+            //adding the pending promise for getRating to the array of promises
+            promises.push(this.getRating(gameList.getGame(i).getappid()));
         }
         for (var i = 0; i < gameList.getGameList().length; i++) {
-            var rating
-            await Promises[i]
-                .then(result => rating = result)
-            gameList.getGame(i).setrating(rating)
+            var rating;
+            //Awaits for the promise its currently iterating through to resolve. Once it resolves it assigns the result to rating
+            await promises[i]
+                .then(result => rating = result);
+            //assigns rating to game in the Game List
+            gameList.getGame(i).setrating(rating);
         }
-        gameList.printGameList()
     }
 
 }

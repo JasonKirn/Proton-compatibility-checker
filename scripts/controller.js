@@ -16,8 +16,7 @@ class Controller {
    proccessSteamData(unprocessedSteamData) {
       this.gameListModel.importSteamGameList(unprocessedSteamData);
       this.sortGameList("name", true)
-      this.getProtonRatings()
-      this.printGameList()
+      this.getProtonRatings(this.gameListModel)
    }
 
    sortGameList(objectHandle, isDecending) {
