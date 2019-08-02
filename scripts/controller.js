@@ -1,36 +1,43 @@
 class Controller {
    constructor() {
+      //Declerations for api key and all models for the backend
       this.apikey = require("../keys/steamapikey.json");
       this.SteamModel = require("../models/steammodel.js");
       this.ProtonModel = require("../models/protonmodel.js")
       this.GameListModel = require("../models/gamelistmodel.js");
       this.steamModel = new this.SteamModel(this.apikey);
       this.protonModel = new this.ProtonModel();
-      this.gameListModel = new this.GameListModel();
+
    }
-   retriveSteamGames(user) {
-      this.steamModel.retriveGames(user)
-         .then(unprocessedSteamData => { this.proccessSteamData(unprocessedSteamData) })
+   /**
+    * Retrives Steam Games from Steamworks API given their userid
+    * @param {Given user Steam ID} user 
+    */
+   async getSteamGameList(user) {
+      return await this.steamModel.retriveGames(user)
          .catch(console.log(Error));
    }
-   proccessSteamData(unprocessedSteamData) {
-      this.gameListModel.importSteamGameList(unprocessedSteamData);
-      this.sortGameList("name", true)
-      this.getProtonRatings(this.gameListModel)
+
+   /**
+    * Retrives Steamgames from Steamworks API given userid and assigns each game an average proton rating
+    * @param {Given user Steam ID} user 
+    */
+   async retriveGames(user) {
+      let gameList = new this.GameListModel();
+      let steamGameList = await this.getSteamGameList(user);
+      gameList.importSteamGameList(steamGameList);
+      await this.getProtonRatings(gameList);
+      return gameList;
    }
 
-   sortGameList(objectHandle, isDecending) {
-      this.gameListModel.sortList(objectHandle, isDecending)
-   }
-   printGameList() {
-      this.gameListModel.printGameList()
-   }
-   getProtonRatings() {
-      this.protonModel.processGameList(this.gameListModel)
+   /**
+    * Retrives proton ratings for the given gameList
+    * @param {Populated Gamelist} gameList 
+    */
+   async getProtonRatings(gameList) {
+      await this.protonModel.processGameList(gameList)
+         .catch(console.log(Error));
    }
 
 }
-var testUser = "76561197979972334";
-controller = new Controller()
-controller.retriveSteamGames(testUser)
-module.exports = Controller
+module.exports = Controller;
