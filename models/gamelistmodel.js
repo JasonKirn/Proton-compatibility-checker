@@ -6,9 +6,9 @@ class Gameslist {
     importSteamGameList(gameListData) {
 
         for (var i = 0; i < gameListData.length; i++) {
-            this.addGame(gameListData[i].name, gameListData[i].appid, gameListData[i].img_logo_url, null);
+            this.addGame(gameListData[i].name, gameListData[i].appid, gameListData[i].img_logo_url, null, gameListData[i].playtime_forever);
         }
-
+        
     }
 
     sortList(objectHandle, descendingTrue) {
@@ -84,8 +84,8 @@ class Gameslist {
     }
 
 
-    addGame(name, appid, imgurl, rating) {
-        this.gameList.push(new Game(name, appid, imgurl, rating));
+    addGame(name, appId, imgUrl, rating, playTime) {
+        this.gameList.push(new Game(name, appId, imgUrl, rating, playTime));
     }
 
     getGameList() {
@@ -111,11 +111,12 @@ class Gameslist {
 
 //Holds only the neccessary info we need from each game in the api results called from steammodel.js
 class Game {
-    constructor(name, appId, imgUrl, rating) {
+    constructor(name, appId, imgUrl, rating, playTime) {
         this.name = name;
         this.appId = appId;
         this.imgUrl = imgUrl;
         this.rating = rating;
+        this.playTime = playTime;
     }
 
     getName() {
@@ -141,6 +142,12 @@ class Game {
     }
     setrating(rating) {
         this.rating = rating;
+    }
+    getPlayTime() {
+        return this.playTime;
+    }
+    setPlayTime() {
+        this.playTime = playTime;
     }
 }
 
