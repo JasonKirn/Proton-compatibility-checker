@@ -1,5 +1,7 @@
 $(document).ready(function(){
     $("#useridsubmit").on("click", function() {
-        $.post("getSteamGames")
+        $.post("getSteamGames", {
+            userid: $("#userIdBox").val()
+        })
     })
 })
