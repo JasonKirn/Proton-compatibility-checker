@@ -22,7 +22,7 @@ class Controller {
     * Retrives Steamgames from Steamworks API given userid and assigns each game an average proton rating
     * @param {Given user Steam ID} user 
     */
-   async retriveGames(user) {
+   async retreiveGames(user) {
       let gameList = new this.GameListModel();
       let steamGameList = await this.getSteamGameList(user);
       gameList.importSteamGameList(steamGameList);

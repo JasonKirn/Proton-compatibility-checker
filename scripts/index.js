@@ -6,11 +6,14 @@ startServer = function () {
     const express = require('express')
     const app = express()
     const port = 3000
+
     const pathVar = require("path");
     const bodyParser = require("body-parser");
+
     app.use(bodyParser.urlencoded({
         extended: true
     }));
+
     app.use(bodyParser.json());
 
 
@@ -21,7 +24,15 @@ startServer = function () {
     app.post("/getSteamGames", (req, res) => getSteamGames(req, res))
     
     getSteamGames = async function(req, res) {
-       console.log(await controller.retriveGames(req.body.userid))
+        //console.log(await controller.retrieveGames(req.body.userid))
+       
+        finalUserGameList = await controller.retreiveGames(req.body.userid);
+        console.log(finalUserGameList)
+        res.send(finalUserGameList)
+
+    
+
+
     }
     //Code to start server
     app.listen(port, () => console.log(`Example app listening on port ${port}!`))

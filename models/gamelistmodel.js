@@ -19,17 +19,19 @@ class Gameslist {
 
     }
 
-    quickSort(left, right, objectHandle, decendingTrue) {
+    quickSort(left, right, objectHandle, descendingTrue) {
+
         var index;
+        
         if (this.gameList.length > 2) {
 
-            index = this.partition(left, right, objectHandle, decendingTrue); //index returned from partition
+            index = this.partition(left, right, objectHandle, descendingTrue); //index returned from partition
 
             if (left < index - 1) { //more elements on the left side of the pivot
-                this.quickSort(left, index - 1, objectHandle, decendingTrue);
+                this.quickSort(left, index - 1, objectHandle, descendingTrue);
             }
             if (index < right) { //more elements on the right side of the pivot
-                this.quickSort(index, right, objectHandle, decendingTrue);
+                this.quickSort(index, right, objectHandle, descendingTrue);
             }
 
         }
