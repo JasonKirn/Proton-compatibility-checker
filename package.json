@@ -10,7 +10,7 @@
     "mime": "^2.4.3",
     "negotiator": "^0.6.2",
     "node.js": "0.0.0",
-    "qs": "^6.7.0",
+    "qs": "^6.7.3",
     "send": "^0.17.1"
   },
   "devDependencies": {},
